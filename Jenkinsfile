@@ -1,3 +1,7 @@
+tools {
+    maven 'Maven-3.9.6'
+}
+
 pipeline{
     agent any
     stages{
@@ -12,6 +16,12 @@ pipeline{
             steps{
                sh 'mvn clean install' 
                sh 'whoami'
+            }
+        }
+	stage('Check Maven') {
+            steps {
+                sh 'which mvn'
+                sh 'mvn -version'
             }
         }
         stage("Docker build")

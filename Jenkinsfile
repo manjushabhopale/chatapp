@@ -18,8 +18,8 @@ pipeline{
 
 	stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv(credentialsId: 'sonar-token') {
-                    sh 'mvn sonar:sonar'
+                withSonarQubeEnv("${SONARQUBE}") {
+                   sh 'mvn sonar:sonar -Dsonar.login=${SONAR_AUTH_TOKEN}'
                 }
             }
         }

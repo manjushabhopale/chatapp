@@ -1,10 +1,10 @@
-tools {
-    maven 'Maven-3.9.6'
-}
 
 pipeline{
     agent any
-    stages{
+    	tools{
+	maven 'Maven-3.9.6'
+		}
+	stages{
         stage("Git checkout")
         {
             steps{

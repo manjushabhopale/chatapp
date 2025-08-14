@@ -15,6 +15,14 @@ pipeline{
                 git branch: 'main', url: 'https://github.com/manjushabhopale/chatapp.git'
             }
         }
+
+	stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv(credentialsId: 'sonar-token') {
+                    sh 'mvn sonar:sonar'
+                }
+            }
+        }
         stage("Build")
         {
             steps{

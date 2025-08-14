@@ -4,6 +4,10 @@ pipeline{
     	tools{
 	maven 'Maven-3.9.6'
 		}
+	environment {
+        SONARQUBE = 'SonarQubeServer' // Name from Jenkins System config
+	    }
+
 	stages{
         stage("Git checkout")
         {

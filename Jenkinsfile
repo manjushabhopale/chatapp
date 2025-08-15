@@ -23,12 +23,16 @@ pipeline {
         }
 
         stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv("${SONARQUBE}") {
-                    sh 'mvn sonar:sonar -Dsonar.login=${SONAR_AUTH_TOKEN}'
-                }
-            }
+    steps {
+        withSonarQubeEnv("${SONARQUBE}") {
+            sh '''
+                mvn sonar:sonar \
+                -Dsonar.login=${SONAR_AUTH_TOKEN} \
+                -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+            '''
         }
+    }
+}
 
         stage('Check Maven') {
             steps {

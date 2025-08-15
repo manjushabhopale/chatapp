@@ -1,54 +1,52 @@
-
-pipeline{
+pipeline {
     agent any
-    	tools{
-	maven 'Maven-3.9.6'
-		}
-	environment {
-        SONARQUBE = 'SonarQubeServer' // Name from Jenkins System config
-	    }
 
-	stages{
-        stage("Git checkout")
-        {
-            steps{
+    tools {
+        maven 'Maven-3.9.6'
+    }
+
+    environment {
+        SONARQUBE = 'SonarQubeServer' // Name from Jenkins System config
+    }
+
+    stages {
+        stage("Git checkout") {
+            steps {
                 git branch: 'main', url: 'https://github.com/manjushabhopale/chatapp.git'
             }
         }
 
-	stage('SonarQube Analysis') {
+        stage("Build & Test (Generate Coverage)") {
+            steps {
+                sh 'mvn clean verify'
+            }
+        }
+
+        stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv("${SONARQUBE}") {
-                   sh 'mvn sonar:sonar -Dsonar.login=${SONAR_AUTH_TOKEN}'
+                    sh 'mvn sonar:sonar -Dsonar.login=${SONAR_AUTH_TOKEN}'
                 }
             }
         }
-        stage("Build")
-        {
-            steps{
-               sh 'mvn clean install' 
-               sh 'whoami'
-            }
-        }
-	stage('Check Maven') {
+
+        stage('Check Maven') {
             steps {
                 sh 'which mvn'
                 sh 'mvn -version'
             }
         }
-        stage("Docker build")
-        {
-            steps{
+
+        stage("Docker build") {
+            steps {
                 sh 'docker build -t chatapp .'
             }
         }
-        stage("Docker Run")
-        {
-            steps{
+
+        stage("Docker Run") {
+            steps {
                 sh 'docker run -d -p 8081:8081 chatapp:latest'
             }
         }
-        
     }
-    
 }

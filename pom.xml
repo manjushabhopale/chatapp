@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
+<project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
          https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
@@ -23,6 +23,8 @@
         <java.version>17</java.version>
         <maven.compiler.release>17</maven.compiler.release>
         <sonar.host.url>http://65.1.35.156:9000</sonar.host.url>
+        <!-- Ensure consistent test report location -->
+        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     </properties>
 
     <dependencies>
@@ -89,6 +91,7 @@
                             <goal>report</goal>
                         </goals>
                         <configuration>
+                            <outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>
                             <reports>
                                 <xml>true</xml>
                                 <csv>false</csv>

@@ -72,7 +72,29 @@
         	<plugin>
             		<groupId>org.springframework.boot</groupId>
             		<artifactId>spring-boot-maven-plugin</artifactId>
-        	</plugin>
+		</plugin>
+		<plugin>
+    			<groupId>org.jacoco</groupId>
+    			<artifactId>jacoco-maven-plugin</artifactId>
+    			<version>0.8.10</version>
+    				<executions>
+       				 <!-- Attach JaCoCo agent to gather coverage data -->
+        				<execution>
+            					<goals>
+                					<goal>prepare-agent</goal>
+            					</goals>
+        				</execution>
+        			<!-- Generate XML report for SonarQube -->
+        				<execution>
+            					<id>report</id>
+            					<phase>verify</phase>
+            						<goals>
+                						<goal>report</goal>
+            						</goals>
+        				</execution>
+    				</executions>
+		</plugin>
+
 	</plugins>
     </build>
 

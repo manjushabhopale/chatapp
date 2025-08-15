@@ -22,17 +22,19 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
+       stage('SonarQube Analysis') {
     steps {
         withSonarQubeEnv("${SONARQUBE}") {
             sh '''
-                mvn sonar:sonar \
-                -Dsonar.login=${SONAR_AUTH_TOKEN} \
-                -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+                mvn clean verify sonar:sonar \
+                -Dsonar.projectKey=chatroom \
+                -Dsonar.host.url=http://65.1.35.156:9000 \
+                -Dsonar.login=${SONAR_AUTH_TOKEN}
             '''
         }
     }
 }
+
 
         stage('Check Maven') {
             steps {

@@ -21,7 +21,8 @@
 
     <properties>
         <java.version>17</java.version> <!-- Target Java version for Spring Boot -->
-        <maven.compiler.release>17</maven.compiler.release>
+	<maven.compiler.release>17</maven.compiler.release>
+	<sonar.host.url>http://65.1.35.156/:9000</sonar.host.url>
     </properties>
 
     <dependencies>

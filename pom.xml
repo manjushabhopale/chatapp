@@ -20,9 +20,9 @@
     <description>Chat room web application</description>
 
     <properties>
-        <java.version>17</java.version> <!-- Target Java version for Spring Boot -->
-	<maven.compiler.release>17</maven.compiler.release>
-	<sonar.host.url>http://65.1.35.156/:9000</sonar.host.url>
+        <java.version>17</java.version>
+        <maven.compiler.release>17</maven.compiler.release>
+        <sonar.host.url>http://65.1.35.156:9000</sonar.host.url>
     </properties>
 
     <dependencies>
@@ -58,45 +58,54 @@
 
     <build>
         <plugins>
-         <!-- Maven Compiler Plugin -->
-        	<plugin>
-            		<groupId>org.apache.maven.plugins</groupId>
-            		<artifactId>maven-compiler-plugin</artifactId>
-            		<version>3.11.0</version> <!-- upgrade from 3.13.0 -->
-            		<configuration>
-                		<release>17</release>
-            		</configuration>
-        	</plugin>
 
-        <!-- Spring Boot Maven Plugin -->
-        	<plugin>
-            		<groupId>org.springframework.boot</groupId>
-            		<artifactId>spring-boot-maven-plugin</artifactId>
-		</plugin>
-		<plugin>
-    			<groupId>org.jacoco</groupId>
-    			<artifactId>jacoco-maven-plugin</artifactId>
-    			<version>0.8.10</version>
-    				<executions>
-       				 <!-- Attach JaCoCo agent to gather coverage data -->
-        				<execution>
-            					<goals>
-                					<goal>prepare-agent</goal>
-            					</goals>
-        				</execution>
-        			<!-- Generate XML report for SonarQube -->
-        				<execution>
-            					<id>report</id>
-            					<phase>verify</phase>
-            						<goals>
-                						<goal>report</goal>
-            						</goals>
-        				</execution>
-    				</executions>
-		</plugin>
+            <!-- Maven Compiler Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <release>17</release>
+                </configuration>
+            </plugin>
 
-	</plugins>
+            <!-- JaCoCo Maven Plugin -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.10</version>
+                <executions>
+                    <!-- Attach JaCoCo agent -->
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <!-- Generate XML report for SonarQube -->
+                    <execution>
+                        <id>report</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <reports>
+                                <xml>true</xml>
+                                <csv>false</csv>
+                                <html>true</html>
+                            </reports>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Spring Boot Maven Plugin -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+        </plugins>
     </build>
 
 </project>
-

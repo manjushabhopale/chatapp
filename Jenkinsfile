@@ -39,23 +39,20 @@ pipeline {
                 sh 'docker build -t chatapp .'
             }
         }
-
+        stage("push docker image to ECR") {
+            steps {
+                withAWS(region: 'ap-south-1', credentials: 'aws-creds'){
+                   sh 'aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 307946649652.dkr.ecr.ap-south-1.amazonaws.com'
+                   sh 'docker tag chatapp:latest 307946649652.dkr.ecr.ap-south-1.amazonaws.com/chatapp:latest'
+                   sh 'docker push 307946649652.dkr.ecr.ap-south-1.amazonaws.com/chatapp:latest'
+                }
+            }
+        }
         stage("Docker Run") {
             steps {
                 sh 'docker run -d -p 8081:8081 chatapp:latest'
             }
         }
-        stage("view s3 buckets") {
-            steps {
-                withAWS(region: 'ap-south-a', credentials: 'aws-creds'){
-                    sh 'aws s3 ls'
-                }
-            }
-        }
-        stage("push docker image to ECR") {
-            steps {
-                sh 'add the code here'
-            }
-        }
+        
     }
 }

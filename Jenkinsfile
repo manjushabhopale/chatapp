@@ -33,27 +33,7 @@ pipeline {
       			}
     		}
        
-       stage('SonarQube Analysis') {
-    steps {
-        withSonarQubeEnv("${SONARQUBE}") {
-            sh '''
-                mvn clean verify sonar:sonar \
-                -Dsonar.projectKey=chatroom \
-                -Dsonar.host.url=http://65.1.35.156:9000 \
-                -Dsonar.login=${SONAR_AUTH_TOKEN}
-            '''
-        }
-    }
-}
-
-
-        stage('Check Maven') {
-            steps {
-                sh 'which mvn'
-                sh 'mvn -version'
-            }
-        }
-
+       
         stage("Docker build") {
             steps {
                 sh 'docker build -t chatapp .'

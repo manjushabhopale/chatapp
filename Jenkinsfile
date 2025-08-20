@@ -45,5 +45,17 @@ pipeline {
                 sh 'docker run -d -p 8081:8081 chatapp:latest'
             }
         }
+        stage("view s3 buckets") {
+            steps {
+                withAWS(region: 'ap-south-a', credentials: 'aws-creds'){
+                    sh 'aws s3 ls'
+                }
+            }
+        }
+        stage("push docker image to ECR") {
+            steps {
+                sh 'add the code here'
+            }
+        }
     }
 }

@@ -16,12 +16,23 @@ pipeline {
             }
         }
 
-        stage("Build & Test (Generate Coverage)") {
-            steps {
-                sh 'mvn clean verify'
+	stage("Build")
+        {
+            steps{
+               sh 'mvn clean install' 
             }
         }
-
+	stage('Static Code Analysis') {
+     	 environment {
+        	SONAR_URL = "http://65.1.35.156:9000"
+      		}	
+      		steps {
+        		withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_AUTH_TOKEN')]) {
+          		sh 'mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
+        		}
+      			}
+    		}
+       
        stage('SonarQube Analysis') {
     steps {
         withSonarQubeEnv("${SONARQUBE}") {
